@@ -32,7 +32,9 @@ internal static class Program {
 			Console.WriteLine(lines[i]);
 		}
 
-		// File.WriteAllLines(linkPath, lines);
+		string file = Path.GetFileNameWithoutExtension(linkPath);
+		string exportPath = linkPath.Replace(file, $"{file}-converted");
+		File.WriteAllLines(exportPath, lines);
 	}
 
 	private static Converter.Converter SelectConverter() {
