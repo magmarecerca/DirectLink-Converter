@@ -16,12 +16,6 @@ internal static class Program {
 			return;
 		}
 
-		Console.WriteLine("Please select the converter to use:");
-		Array values = Enum.GetValues(typeof(ConverterType));
-		for (int i = 0; i < values.Length - 1; i++) {
-			Console.WriteLine($"{i + 1}. {values.GetValue(i)}");
-		}
-
 		LinkConverter linkConverter = SelectConverter();
 		FileProcessor fileProcessor = new(linkConverter, path: args[0]);
 		fileProcessor.ConvertLinks();
@@ -29,6 +23,12 @@ internal static class Program {
 	}
 
 	private static LinkConverter SelectConverter() {
+		Console.WriteLine("Please select the converter to use:");
+		Array values = Enum.GetValues(typeof(ConverterType));
+		for (int i = 0; i < values.Length - 1; i++) {
+			Console.WriteLine($"{i + 1}. {values.GetValue(i)}");
+		}
+
 		string? selectedConverter = Console.ReadLine();
 		if (selectedConverter == null)
 			throw new Exception("Invalid converter selected.");
