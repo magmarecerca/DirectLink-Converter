@@ -31,7 +31,6 @@ public class FileProcessor {
 		int column = SelectColumn();
 		foreach (string[] row in _lines) {
 			row[column] = _linkConverter.Convert(row[column]);
-			Console.WriteLine(row[column]);
 		}
 	}
 
