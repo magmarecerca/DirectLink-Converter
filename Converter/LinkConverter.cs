@@ -7,7 +7,7 @@ public enum ConverterType {
 	Length,
 }
 
-public class Converter(ConverterType type) {
+public class LinkConverter(ConverterType type) {
 	private readonly ILinkConverter _linkConverter = type switch {
 		ConverterType.GoogleDriveImage => new GoogleDriveImageConverter(),
 		ConverterType.GoogleDriveFile => new GoogleDriveFileConverter(),

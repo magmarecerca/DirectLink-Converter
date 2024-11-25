@@ -22,22 +22,13 @@ internal static class Program {
 			Console.WriteLine($"{i + 1}. {values.GetValue(i)}");
 		}
 
-		Converter.Converter converter = SelectConverter();
-
-		string linkPath = args[0];
-		using StreamReader reader = new(linkPath);
-		List<string> lines = reader.ReadToEnd().Split('\n').ToList();
-		for (int i = 0; i < lines.Count; i++) {
-			lines[i] = converter.Convert(lines[i]);
-			Console.WriteLine(lines[i]);
-		}
-
-		string file = Path.GetFileNameWithoutExtension(linkPath);
-		string exportPath = linkPath.Replace(file, $"{file}-converted");
-		File.WriteAllLines(exportPath, lines);
+		LinkConverter linkConverter = SelectConverter();
+		FileProcessor fileProcessor = new(linkConverter, path: args[0]);
+		fileProcessor.ConvertLinks();
+		fileProcessor.ExportUpdated();
 	}
 
-	private static Converter.Converter SelectConverter() {
+	private static LinkConverter SelectConverter() {
 		string? selectedConverter = Console.ReadLine();
 		if (selectedConverter == null)
 			throw new Exception("Invalid converter selected.");
@@ -46,6 +37,6 @@ internal static class Program {
 		if (converterIndex is >= (int)ConverterType.Length or < 0)
 			throw new Exception("Invalid converter selected.");
 
-		return new Converter.Converter((ConverterType)converterIndex);
+		return new LinkConverter((ConverterType)converterIndex);
 	}
 }
